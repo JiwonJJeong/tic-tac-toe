@@ -14,22 +14,26 @@ const gameboard = function board() {
 
     const addSymbolToArray = function (symbol,row, col) {
         switch (row) {
-            case row = 0:
-                row1[col] = symbol;
+            case 0:
+                (row1[col] === undefined) ? (row1[col] = symbol) : console.log("This spot is filled!");
                 break;
-            case row = 1:
-                row2[col] = symbol;
+            case 1:
+                (row2[col] === undefined) ? (row2[col] = symbol) : console.log("This spot is filled!");
                 break;
-            case row = 2:
-                row3[col] = symbol;
+            case 2:
+                (row3[col] === undefined) ? (row3[col] = symbol) : console.log("This spot is filled!");
                 break;
             default:
                 console.log("something went wrong in addSymbolToArray");
         }
+        displayBoard();
+    }
+
+    const displayBoard = function(){
         console.log(row1,row2,row2);
     }
 
-    return {addSymbolToArray};
+    return {addSymbolToArray, displayBoard};
 }();
 
 const gameManager = function manager() {
