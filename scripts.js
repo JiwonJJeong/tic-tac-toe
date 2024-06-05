@@ -6,11 +6,11 @@ const gameboard = function board() {
     let row3 = [];
 
     const _cacheDOM = function(){
-        const containerForSquares = document.querySelector(".game.grid");
+        const squaresNodeList = document.querySelectorAll(".game.grid > div");
     }
     
     const _bindEvents = function(){
-        // assign event listeners to each square here
+        // assign event listeners to each square here using delegation
     }
 
     const _render = function(){
