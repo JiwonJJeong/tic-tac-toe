@@ -10,8 +10,37 @@ const gameboard = function board() {
     }
     
     const _bindEvents = function(){
-        // assign event listeners to each square here using delegation
+        for (let square of squaresNodeList) {
+            square.addEventListener("click", (e) => _locateSquarePosition(e.target));
+        }
     }
+
+    const _locateSquarePosition = function(eventTarget){
+        const gridNumber = Array.prototype.indexOf.call(eventTarget, squaresNodeList) + 1;
+        let row;
+        let col;
+        switch (gridNumber){
+            case (1|2|3):
+                row=0;
+            case (4|5|6):
+                row=1;
+            case (7|8|9):
+                row=2;
+            case (1|4|7):
+                col=0;
+                break;
+            case (2|5|8):
+                col=1;
+                break;
+            case (3|6|9):
+                col=2;
+                break;
+            default:
+                console.log(row+col+" something went wrong in locateSquarePosition");
+        }
+        return {row, col}
+    }
+
 
     const _render = function(){
         // render board here
