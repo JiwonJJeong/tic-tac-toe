@@ -44,7 +44,7 @@ const gameboard = function board() {
     }
 
     const addSymbolToArray = function (symbol, row, col) {
-        switch (row) {
+        switch (Number(row)) {
             case 0:
                 (row1[col] === undefined) ? (row1[col] = symbol) : console.log("This spot is filled!");
                 break;
