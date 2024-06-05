@@ -145,17 +145,35 @@ const gameManager = function manager() {
     let currentTurnHolder;
     const XSYMBOL = "X";
     const OSYMBOL = "O";
+    let isRoundActive;
 
-    const startGame = function () {
+    const init = function(){
         // prompt name for player 1
         let player1NameInput = prompt("Enter name for player 1:");
         // prompt name for player 2
         let player2NameInput = prompt("Enter name for player 2:");
         player1 = createPlayer(player1NameInput);
         player2 = createPlayer(player2NameInput);
+        _cacheDOM();
+        startGame();
+    }
+
+    const startGame = function () {
         _assignPlayers();
         currentTurnHolder = XSYMBOL;
+        isRoundActive=true;
         gameboard.init();
+        _declareTurn();
+    }
+
+    let turnInfo;
+    let player1Info;
+    let player2Info;
+    const _cacheDOM = function(){
+        const displayArea = document.querySelector(".display.area");
+        turnInfo = displayArea.querySelector(".turn.info");
+        player1Info = displayArea.querySelector(".player1.info");
+        player2Info = displayArea.querySelector(".player2.info");
     }
 
     const _assignPlayers = function () {
@@ -169,14 +187,18 @@ const gameManager = function manager() {
     }
 
     const playRound = function (row, col) {
-        console.log("It is player " + currentTurnHolder + "'s turn.");
-        console.log("The JS thinks you chose row: " + row + " and col: " + col);
-        gameboard.addSymbol(currentTurnHolder, row, col);
-        const winState = gameboard.checkWin();
-        if (!winState) {
-            _updateTurnHolder();
-        } else {
-            console.log(winState);
+        if (isRoundActive){
+            console.log("It is player " + currentTurnHolder + "'s turn.");
+            console.log("The JS thinks you chose row: " + row + " and col: " + col);
+            gameboard.addSymbol(currentTurnHolder, row, col);
+            const winState = gameboard.checkWin();
+            if (!winState) {
+                _updateTurnHolder();
+                _declareTurn();
+            } else {
+                isRoundActive=false;
+                console.log(winState);
+            }
         }
     }
 
@@ -188,7 +210,16 @@ const gameManager = function manager() {
         }
     }
 
-    return { startGame, playRound };
+    const _declareTurn = function (){
+        if (player1.getSymbol() === currentTurnHolder){
+            turnInfo.firstChild.nodeValue = player1.getName() + "'s turn!";
+        } else if (player2.getSymbol() === currentTurnHolder){
+            turnInfo.firstChild.nodeValue = player2.getName() + "'s turn!";
+        }
+        turnInfo.lastChild.nodeValue = "You are " + currentTurnHolder + ".";
+    }
+
+    return { startGame, playRound, init };
 }();
 
 function createPlayer(name) {
@@ -199,7 +230,15 @@ function createPlayer(name) {
         symbol = inputSymbol;
     }
 
-    return { setSymbol }
+    const getSymbol = function(){
+        return symbol;
+    }
+
+    const getName = function(){
+        return name;
+    }
+
+    return { setSymbol, getSymbol, getName};
 }
 
-gameManager.startGame();
+gameManager.init();
