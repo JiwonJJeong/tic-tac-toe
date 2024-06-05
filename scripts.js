@@ -45,13 +45,13 @@ const gameboard = function board() {
     const addSymbolToArray = function (symbol, row, col) {
         switch (Number(row)) {
             case 0:
-                (row1[col] === undefined) ? (row1[col] = symbol) : console.log("This spot is filled!");
+                (row1[col] === undefined) ? (row1[col] = symbol) : console.log("This spot is filled! Choose another!");
                 break;
             case 1:
-                (row2[col] === undefined) ? (row2[col] = symbol) : console.log("This spot is filled!");
+                (row2[col] === undefined) ? (row2[col] = symbol) : console.log("This spot is filled! Choose another!");
                 break;
             case 2:
-                (row3[col] === undefined) ? (row3[col] = symbol) : console.log("This spot is filled!");
+                (row3[col] === undefined) ? (row3[col] = symbol) : console.log("This spot is filled! Choose another!");
                 break;
             default:
                 console.log("something went wrong in addSymbolToArray" + row + col);
@@ -97,11 +97,9 @@ const gameManager = function manager() {
 
     const _playRound = function () {
         console.log("It is player " + currentTurnHolder + "'s turn.");
-        // ask for input from player who has their turn
-        const inputRow = _getInputRow();
-        const inputCol = _getInputCol();
-        console.log("The JS thinks you chose row: " + inputRow + " and col: " + inputCol);
-        gameboard.addSymbolToArray(currentTurnHolder, inputRow, inputCol);
+        const inputs = _getInputs();
+        console.log("The JS thinks you chose row: " + inputs.inputRow + " and col: " + inputs.inputColumn);
+        gameboard.addSymbolToArray(currentTurnHolder, inputs.inputRow, inputs.inputColumn);
         gameboard.displayBoard();
         const winState = gameboard.checkWin();
         if (!winState) {
@@ -120,14 +118,10 @@ const gameManager = function manager() {
         }
     }
 
-    const _getInputRow = function () {
+    const _getInputs = function () {
         let inputRow = prompt("What row do you choose?");
-        return inputRow;
-    }
-
-    const _getInputCol = function () {
         let inputColumn = prompt("What column do you choose?");
-        return inputColumn;
+        return {inputRow, inputColumn};
     }
 
     return { startGame };
