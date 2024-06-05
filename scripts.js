@@ -49,7 +49,7 @@ const gameboard = function board() {
         } else if (gridNumber === 3 || gridNumber === 6 || gridNumber === 9) {
             col = 2;
         }
-        console.log("row: " + row + "col: " + col + "logged in locateSquarePosition");
+        console.log("row: " + row + " col: " + col + " logged in locateSquarePosition");
         return { row, col }
     }
 
@@ -68,21 +68,21 @@ const gameboard = function board() {
 
     const checkWin = function () {
         if (row1[0] !== undefined && row1[0] === row1[1] && row1[1] === row1[2]) { // 3 across first row
-            return row1[0] + " wins!";
+            return row1[0];
         } else if (row2[0] !== undefined && row2[0] === row2[1] && row2[1] === row2[2]) { // 3 across middle row
-            return row2[0] + " wins!";
+            return row2[0];
         } else if (row3[0] !== undefined && row3[0] === row3[1] && row3[1] === row3[2]) { // 3 across bottom row
-            return row3[0] + " wins!";
+            return row3[0];
         } else if (row1[0] !== undefined && row1[0] === row2[0] && row2[0] === row3[0]) { // 3 down left column
-            return row1[0] + " wins!";
+            return row1[0];
         } else if (row1[1] !== undefined && row1[1] === row2[1] && row2[1] === row3[1]) { // 3 down middle column
-            return row1[1] + " wins!";
+            return row1[1];
         } else if (row1[2] !== undefined && row1[2] === row2[2] && row2[2] === row3[2]) { // 3 down right column
-            return row1[2] + " wins!";
+            return row1[2];
         } else if (row1[0] !== undefined && row1[0] === row2[1] && row2[1] === row3[2]) { // diagonal
-            return row1[0] + " wins!";
+            return row1[0];
         } else if (row3[0] !== undefined && row3[0] === row2[1] && row2[1] === row1[2]) { // other diagonal
-            return row3[0] + " wins1";
+            return row3[0];
         } else if (_checkBoardIsFilled()) {
             return "It's a tie!";
         }
@@ -203,8 +203,10 @@ const gameManager = function manager() {
                 _updateTurnHolder();
                 _declareTurn();
             } else {
+                _updateScore(winState);
+                _renderScores();
                 isRoundActive=false;
-                console.log(winState);
+                console.log("Winner: " + winState);
             }
         }
     }
@@ -224,6 +226,17 @@ const gameManager = function manager() {
             playerTurnInfo.textContent = player2.getName() + "'s turn!";
         }
         symbolTurnInfo.textContent = "You are " + currentTurnHolder + ".";
+    }
+
+    const _updateScore = function (symbolThatWon){
+        if (player1.getSymbol() == symbolThatWon){
+            player1.incrementScore();
+        } else if (player2.getSymbol() == symbolThatWon){
+            player2.incrementScore();
+        } else if (symbolThatWon == "It's a tie!"){
+            player1.incrementScore();
+            player2.incrementScore();
+        }
     }
 
     const _renderPlayerNames = function(){
