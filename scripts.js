@@ -30,7 +30,7 @@ const gameboard = function board() {
     }
 
     const displayBoard = function(){
-        console.log(row1,row2,row2);
+        console.log(row1,row2,row3);
     }
 
     return {addSymbolToArray, displayBoard};
