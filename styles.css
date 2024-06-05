@@ -1,5 +1,6 @@
 *{
     --grid-background-color: gray;
+    --grid-background-hover-color: blue;
 }
 
 /* game area */
@@ -25,4 +26,8 @@
 .game.grid > div.o{
     background: url("./images/o-mark.svg") black;
     background-color: var(--grid-background-color);
+}
+
+.game.grid > div.empty:hover{
+    background-color: var(--grid-background-hover-color);
 }
