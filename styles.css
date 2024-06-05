@@ -1,0 +1,14 @@
+/* game area */
+.game.grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    aspect-ratio: 1/1;
+    height: 50vh;
+    gap: 10px;
+    background-color: black;;
+}
+
+.game.grid > div{
+    background-color: rgb(191, 191, 255);
+}
