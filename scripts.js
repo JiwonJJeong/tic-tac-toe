@@ -5,8 +5,14 @@ const gameboard = function board() {
     let row2 = [];
     let row3 = [];
 
+    const init = function(){
+        _cacheDOM();
+        _bindEvents();
+    }
+
+    let squaresNodeList;
     const _cacheDOM = function(){
-        const squaresNodeList = document.querySelectorAll(".game.grid > div");
+        squaresNodeList = document.querySelectorAll(".game.grid > div");
     }
     
     const _bindEvents = function(){
@@ -38,6 +44,7 @@ const gameboard = function board() {
             default:
                 console.log(row+col+" something went wrong in locateSquarePosition");
         }
+        console.log({row,col});
         return {row, col}
     }
 
@@ -116,7 +123,7 @@ const gameboard = function board() {
         }
     }
 
-    return { addSymbolToArray, displayBoard, checkWin, isInputLocationEmpty};
+    return { addSymbolToArray, displayBoard, checkWin, isInputLocationEmpty, init};
 }();
 
 const gameManager = function manager() {
@@ -135,6 +142,7 @@ const gameManager = function manager() {
         player2 = createPlayer(player2NameInput);
         _assignPlayers();
         currentTurnHolder = XSYMBOL;
+        gameboard.init();
         gameboard.displayBoard();
         _playRound();
     }
@@ -151,7 +159,7 @@ const gameManager = function manager() {
 
     const _playRound = function () {
         console.log("It is player " + currentTurnHolder + "'s turn.");
-        const inputs = _getInputs();
+        let inputs = _getInputs();
         console.log("The JS thinks you chose row: " + inputs.inputRow + " and col: " + inputs.inputColumn);
         while(gameboard.isInputLocationEmpty(inputs.inputRow, inputs.inputColumn)){
             console.log("The spot is taken! Choose again!");
@@ -195,3 +203,5 @@ function createPlayer(name) {
 
     return { setSymbol }
 }
+
+gameManager.startGame();
