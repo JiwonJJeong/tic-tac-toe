@@ -5,61 +5,56 @@ const gameboard = function board() {
     let row2 = [];
     let row3 = [];
 
-    const init = function(){
+    const init = function () {
         _cacheDOM();
         _bindEvents();
     }
 
     let squaresNodeList;
-    const _cacheDOM = function(){
+    const _cacheDOM = function () {
         squaresNodeList = document.querySelectorAll(".game.grid > div");
     }
-    
-    const _bindEvents = function(){
+
+    const _bindEvents = function () {
         for (let square of squaresNodeList) {
             square.addEventListener("click", (e) => _getInputSequence(e.target));
         }
     }
 
-    const _getInputSequence = function(eventTarget){
+    const _getInputSequence = function (eventTarget) {
         const position = _locateSquarePosition(eventTarget);
-        if (isInputLocationEmpty(position.row,position.col)){
-            playRound(position);
+        if (_isInputLocationEmpty(position.row, position.col)) {
+            gameManager.playRound(position.row, position.col);
         } else {
             console.log("This spot is taken! Choose another!");
         }
     }
 
-    const _locateSquarePosition = function(eventTarget){
+    const _locateSquarePosition = function (eventTarget) {
         const squaresArray = Array.prototype.slice.call(squaresNodeList);
-        const gridNumber = squaresArray.indexOf(eventTarget);
+        const gridNumber = squaresArray.indexOf(eventTarget) + 1;
         let row;
         let col;
-        switch (gridNumber){
-            case (1|2|3):
-                row=0;
-            case (4|5|6):
-                row=1;
-            case (7|8|9):
-                row=2;
-            case (1|4|7):
-                col=0;
-                break;
-            case (2|5|8):
-                col=1;
-                break;
-            case (3|6|9):
-                col=2;
-                break;
-            default:
-                console.log(row+col+" something went wrong in locateSquarePosition" +gridNumber + eventTarget);
+        if (gridNumber === 1 || gridNumber === 2 || gridNumber === 3) {
+            row = 0;
+        } else if (gridNumber === 4 || gridNumber === 5 || gridNumber === 6) {
+            row = 1;
+        } else if (gridNumber === 7 || gridNumber === 8 || gridNumber === 9) {
+            row = 2;
         }
-        console.log(row + col + "logged in locateSquarePosition");
-        return {row, col}
+        if (gridNumber === 1 || gridNumber === 4 || gridNumber === 7) {
+            col = 0;
+        } else if (gridNumber === 2 || gridNumber === 5 || gridNumber === 8) {
+            col = 1;
+        } else if (gridNumber === 3 || gridNumber === 6 || gridNumber === 9) {
+            col = 2;
+        }
+        console.log("row: " + row + "col: " + col + "logged in locateSquarePosition");
+        return { row, col }
     }
 
 
-    const _render = function(){
+    const _render = function () {
         // render board here
     }
 
@@ -120,20 +115,20 @@ const gameboard = function board() {
         console.log(row1, row2, row3);
     }
 
-    const isInputLocationEmpty = function (row, col){
+    const _isInputLocationEmpty = function (row, col) {
         switch (Number(row)) {
             case 0:
-                return (row1[col] !== undefined);
+                return (row1[col] === undefined);
             case 1:
-                return (row2[col] !== undefined);
+                return (row2[col] === undefined);
             case 2:
-                return (row3[col] !== undefined);
+                return (row3[col] === undefined);
             default:
                 console.log("something went wrong in isInputLocationEmpty" + row + col);
         }
     }
 
-    return { addSymbolToArray, displayBoard, checkWin, isInputLocationEmpty, init};
+    return { addSymbolToArray, displayBoard, checkWin, init };
 }();
 
 const gameManager = function manager() {
@@ -166,15 +161,14 @@ const gameManager = function manager() {
         }
     }
 
-    const playRound = function (inputs) {
+    const playRound = function (row, col) {
         console.log("It is player " + currentTurnHolder + "'s turn.");
-        console.log("The JS thinks you chose row: " + inputs.row + " and col: " + inputs.col);
-        gameboard.addSymbolToArray(currentTurnHolder, inputs.inputRow, inputs.inputColumn);
+        console.log("The JS thinks you chose row: " + row + " and col: " + col);
+        gameboard.addSymbolToArray(currentTurnHolder, row, col);
         gameboard.displayBoard();
         const winState = gameboard.checkWin();
         if (!winState) {
             _updateTurnHolder();
-            _playRound();
         } else {
             console.log(winState);
         }
