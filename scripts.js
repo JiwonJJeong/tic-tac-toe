@@ -148,9 +148,8 @@ const gameManager = function manager() {
     let isRoundActive;
 
     const init = function(){
-        // prompt name for player 1
+        // prompt player names
         let player1NameInput = prompt("Enter name for player 1:");
-        // prompt name for player 2
         let player2NameInput = prompt("Enter name for player 2:");
         player1 = createPlayer(player1NameInput);
         player2 = createPlayer(player2NameInput);
@@ -160,20 +159,28 @@ const gameManager = function manager() {
 
     const startGame = function () {
         _assignPlayers();
+        _renderPlayerNames();
+        _renderScores();
         currentTurnHolder = XSYMBOL;
         isRoundActive=true;
         gameboard.init();
         _declareTurn();
     }
 
-    let turnInfo;
-    let player1Info;
-    let player2Info;
+    let playerTurnInfo;
+    let symbolTurnInfo;
+    let player1Name;
+    let player1Score;
+    let player2Name;
+    let player2Score;;
     const _cacheDOM = function(){
         const displayArea = document.querySelector(".display.area");
-        turnInfo = displayArea.querySelector(".turn.info");
-        player1Info = displayArea.querySelector(".player1.info");
-        player2Info = displayArea.querySelector(".player2.info");
+        playerTurnInfo = displayArea.querySelector(".turn.info .player");
+        symbolTurnInfo = displayArea.querySelector(".turn.info .symbol");
+        player1Name = displayArea.querySelector(".player1.info .name");
+        player1Score = displayArea.querySelector(".player1.info .score");
+        player2Name = displayArea.querySelector(".player2.info .name");
+        player2Score = displayArea.querySelector(".player2.info .score");
     }
 
     const _assignPlayers = function () {
@@ -212,11 +219,21 @@ const gameManager = function manager() {
 
     const _declareTurn = function (){
         if (player1.getSymbol() === currentTurnHolder){
-            turnInfo.firstChild.nodeValue = player1.getName() + "'s turn!";
+            playerTurnInfo.textContent = player1.getName() + "'s turn!";
         } else if (player2.getSymbol() === currentTurnHolder){
-            turnInfo.firstChild.nodeValue = player2.getName() + "'s turn!";
+            playerTurnInfo.textContent = player2.getName() + "'s turn!";
         }
-        turnInfo.lastChild.nodeValue = "You are " + currentTurnHolder + ".";
+        symbolTurnInfo.textContent = "You are " + currentTurnHolder + ".";
+    }
+
+    const _renderPlayerNames = function(){
+        player1Name.textContent = "Player: " + player1.getName() + " (" + player1.getSymbol() + ")";
+        player2Name.textContent = "Player: " + player2.getName() + " (" + player2.getSymbol() + ")";
+    }
+
+    const _renderScores = function(){
+        player1Score.textContent  = "Score: " + player1.getScore();
+        player2Score.textContent  = "Score: " + player2.getScore();
     }
 
     return { startGame, playRound, init };
@@ -225,6 +242,7 @@ const gameManager = function manager() {
 function createPlayer(name) {
     let playerName = name;
     let symbol;
+    let score = 0;
 
     const setSymbol = function (inputSymbol) {
         symbol = inputSymbol;
@@ -235,10 +253,18 @@ function createPlayer(name) {
     }
 
     const getName = function(){
-        return name;
+        return playerName;
     }
 
-    return { setSymbol, getSymbol, getName};
+    const getScore = function(){
+        return score;
+    }
+
+    const incrementScore = function(){
+        score++;
+    }
+
+    return { setSymbol, getSymbol, getName, incrementScore, getScore};
 }
 
 gameManager.init();
