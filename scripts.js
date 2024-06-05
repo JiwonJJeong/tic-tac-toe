@@ -23,12 +23,13 @@ const gameboard = function board() {
         } else if (row3[0] === row2[1] && row2[1] === row1[2]){ // other diagonal
             return row3[0] + " wins1";
         }
-        if (checkBoardIsFilled){
+        if (_checkBoardIsFilled){
             return "It's a tie!";
         }
+        return false;
     }
 
-    const checkBoardIsFilled = function(){
+    const _checkBoardIsFilled = function(){
         for (let i=0; i<=2; i++){
             if (row1[i] === undefined){
                 return false;
@@ -66,15 +67,57 @@ const gameboard = function board() {
 }();
 
 const gameManager = function manager() {
-    // start game method will assign players to O or X
+    let player1;
+    let player2;
+    let currentTurnHolder;
+    const XSYMBOL = "X";
+    const OSYMBOL = "O";
 
-    // run round method will prompt one player to choose a spot, then calls gameboard method to place their symbol
-    // flips players each round
+    const startGame = function(){
+        // prompt name for player 1
+        let player1NameInput;
+        // prompt name for player 2
+        let player2NameInput;
+        player1 = createPlayer(player1NameInput);
+        player2 = createPlayer(player2NameInput);
+        _assignPlayers();
+        currentTurnHolder = XSYMBOL;
+        gameboard.displayBoard();
+    }
+
+    const _assignPlayers = function(){
+        if (Math.random <= 0.5){
+            player1.setSymbol(XSYMBOL);
+            player2.setSymbol(OSYMBOL);
+        } else {
+            player1.setSymbol(OSYMBOL);
+            player2.setSymbol(XSYMBOL);
+        }
+    }
+
+    const _playRound = function(){
+        // ask for player's whose turn it is input
+        // wait for input to know where to put the symbol
+        gameboard.displayBoard();
+        const winState = gameboard.checkWin();
+        if (!winState){
+            _playRound();
+        } else {
+            return winState;
+        }
+    }
+
 }();
 
-function player() {
-    // private variable for player name
-    // private variable for whether they are player O or X
+function createPlayer(name) {
+    let name = name;
+    let symbol;
+
+    const setSymbol = function(inputSymbol){
+        symbol = inputSymbol;
+    }
+
+    return {setSymbol}
 }
 
 // make playerO
