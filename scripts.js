@@ -108,7 +108,7 @@ const gameManager = function manager() {
             _updateTurnHolder();
             _playRound();
         } else {
-            return winState;
+            console.log(winState);
         }
     }
 
