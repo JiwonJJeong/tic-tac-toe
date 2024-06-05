@@ -45,13 +45,13 @@ const gameboard = function board() {
     const addSymbolToArray = function (symbol, row, col) {
         switch (Number(row)) {
             case 0:
-                (row1[col] === undefined) ? (row1[col] = symbol) : console.log("This spot is filled! Choose another!");
+                row1[col] = symbol;
                 break;
             case 1:
-                (row2[col] === undefined) ? (row2[col] = symbol) : console.log("This spot is filled! Choose another!");
+                row2[col] = symbol;
                 break;
             case 2:
-                (row3[col] === undefined) ? (row3[col] = symbol) : console.log("This spot is filled! Choose another!");
+                row3[col] = symbol;
                 break;
             default:
                 console.log("something went wrong in addSymbolToArray" + row + col);
@@ -62,7 +62,20 @@ const gameboard = function board() {
         console.log(row1, row2, row3);
     }
 
-    return { addSymbolToArray, displayBoard, checkWin };
+    const isInputLocationEmpty = function (row, col){
+        switch (Number(row)) {
+            case 0:
+                return (row1[col] === undefined);
+            case 1:
+                return (row2[col] === undefined);
+            case 2:
+                return (row3[col] === undefined);
+            default:
+                console.log("something went wrong in isInputLocationEmpty" + row + col);
+        }
+    }
+
+    return { addSymbolToArray, displayBoard, checkWin, isInputLocationEmpty};
 }();
 
 const gameManager = function manager() {
@@ -99,6 +112,10 @@ const gameManager = function manager() {
         console.log("It is player " + currentTurnHolder + "'s turn.");
         const inputs = _getInputs();
         console.log("The JS thinks you chose row: " + inputs.inputRow + " and col: " + inputs.inputColumn);
+        while(gameboard.isInputLocationEmpty(inputs.inputRow, inputs.inputColumn)){
+            console.log("The spot is taken! Choose again!");
+            inputs = _getInputs();
+        }
         gameboard.addSymbolToArray(currentTurnHolder, inputs.inputRow, inputs.inputColumn);
         gameboard.displayBoard();
         const winState = gameboard.checkWin();
