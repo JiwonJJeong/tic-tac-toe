@@ -44,13 +44,13 @@ const gameboard = function board() {
 
     const addSymbolToArray = function (symbol, row, col) {
         switch (Number(row)) {
-            case 1:
+            case 0:
                 (row1[col] === undefined) ? (row1[col] = symbol) : console.log("This spot is filled!");
                 break;
-            case 2:
+            case 1:
                 (row2[col] === undefined) ? (row2[col] = symbol) : console.log("This spot is filled!");
                 break;
-            case 3:
+            case 2:
                 (row3[col] === undefined) ? (row3[col] = symbol) : console.log("This spot is filled!");
                 break;
             default:
