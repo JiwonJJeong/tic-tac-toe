@@ -1,3 +1,7 @@
+*{
+    --grid-background-color: gray;
+}
+
 /* game area */
 .game.grid{
     display:grid;
@@ -10,5 +14,15 @@
 }
 
 .game.grid > div{
-    background-color: rgb(191, 191, 255);
+    background-color: var(--grid-background-color);
+}
+
+.game.grid > div.x{
+    background: url("./images/x-mark.svg") black;
+    background-color: var(--grid-background-color);
+}
+
+.game.grid > div.o{
+    background: url("./images/o-mark.svg") black;
+    background-color: var(--grid-background-color);
 }
