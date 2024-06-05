@@ -65,11 +65,11 @@ const gameboard = function board() {
     const isInputLocationEmpty = function (row, col){
         switch (Number(row)) {
             case 0:
-                return (row1[col] === undefined);
+                return (row1[col] !== undefined);
             case 1:
-                return (row2[col] === undefined);
+                return (row2[col] !== undefined);
             case 2:
-                return (row3[col] === undefined);
+                return (row3[col] !== undefined);
             default:
                 console.log("something went wrong in isInputLocationEmpty" + row + col);
         }
@@ -154,5 +154,3 @@ function createPlayer(name) {
 
     return { setSymbol }
 }
-
-gameManager.startGame();
