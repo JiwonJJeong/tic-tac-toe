@@ -53,9 +53,17 @@ const gameboard = function board() {
         return { row, col }
     }
 
-
-    const _render = function () {
-        // render board here
+    const _isInputLocationEmpty = function (row, col) {
+        switch (Number(row)) {
+            case 0:
+                return (row1[col] === undefined);
+            case 1:
+                return (row2[col] === undefined);
+            case 2:
+                return (row3[col] === undefined);
+            default:
+                console.log("something went wrong in isInputLocationEmpty" + row + col);
+        }
     }
 
     const checkWin = function () {
@@ -95,7 +103,14 @@ const gameboard = function board() {
         return true;
     }
 
-    const addSymbolToArray = function (symbol, row, col) {
+    const addSymbol = function(symbol, row, col){
+        _addSymbolToArray(symbol,row, col);
+        const gridIndexInNodeList = row*3 + col;
+        _renderSquareUpdate(symbol, squaresNodeList[gridIndexInNodeList]);
+    }
+
+
+    const _addSymbolToArray = function (symbol, row, col) {
         switch (Number(row)) {
             case 0:
                 row1[col] = symbol;
@@ -111,24 +126,17 @@ const gameboard = function board() {
         }
     }
 
-    const displayBoard = function () {
-        console.log(row1, row2, row3);
-    }
-
-    const _isInputLocationEmpty = function (row, col) {
-        switch (Number(row)) {
-            case 0:
-                return (row1[col] === undefined);
-            case 1:
-                return (row2[col] === undefined);
-            case 2:
-                return (row3[col] === undefined);
-            default:
-                console.log("something went wrong in isInputLocationEmpty" + row + col);
+    const _renderSquareUpdate = function (symbol, gridToChange) {
+        if (symbol === "X"){
+            gridToChange.classList.add("x");
+            gridToChange.classList.remove("empty");
+        } else {
+            gridToChange.classList.add("o");
+            gridToChange.classList.remove("empty");
         }
     }
 
-    return { addSymbolToArray, displayBoard, checkWin, init };
+    return { addSymbol, checkWin, init };
 }();
 
 const gameManager = function manager() {
@@ -148,7 +156,6 @@ const gameManager = function manager() {
         _assignPlayers();
         currentTurnHolder = XSYMBOL;
         gameboard.init();
-        gameboard.displayBoard();
     }
 
     const _assignPlayers = function () {
@@ -164,8 +171,7 @@ const gameManager = function manager() {
     const playRound = function (row, col) {
         console.log("It is player " + currentTurnHolder + "'s turn.");
         console.log("The JS thinks you chose row: " + row + " and col: " + col);
-        gameboard.addSymbolToArray(currentTurnHolder, row, col);
-        gameboard.displayBoard();
+        gameboard.addSymbol(currentTurnHolder, row, col);
         const winState = gameboard.checkWin();
         if (!winState) {
             _updateTurnHolder();
