@@ -5,6 +5,18 @@ const gameboard = function board() {
     let row2 = [];
     let row3 = [];
 
+    const _cacheDOM = function(){
+        const containerForSquares = document.querySelector(".game.grid");
+    }
+    
+    const _bindEvents = function(){
+        // assign event listeners to each square here
+    }
+
+    const _render = function(){
+        // render board here
+    }
+
     const checkWin = function () {
         if (row1[0] !== undefined && row1[0] === row1[1] && row1[1] === row1[2]) { // 3 across first row
             return row1[0] + " wins!";
