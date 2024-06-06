@@ -165,15 +165,20 @@ const gameManager = function manager() {
     let isRoundActive;
 
     const init = function(){
-        // prompt player names
-        let player1NameInput = prompt("Enter name for player 1:");
-        let player2NameInput = prompt("Enter name for player 2:");
-        player1 = createPlayer(player1NameInput);
-        player2 = createPlayer(player2NameInput);
         _cacheDOM();
-        _renderScores();
         _bindEvents();
+    }
+
+    const _loadGame = function(){
+        _initPlayersFromForm();
+        _hidePlayerNameInputForm();
+        _renderBoard();
         startGame();
+    }
+
+    const _initPlayersFromForm = function(){
+        player1 = createPlayer(playerNameInputForm.querySelector("#player1NameInput").value);
+        player2 = createPlayer(playerNameInputForm.querySelector("#player2NameInput").value);
     }
 
     const startGame = function () {
@@ -193,7 +198,11 @@ const gameManager = function manager() {
     let player2Name;
     let player2Score;
     let restartButton;
+    let board;
+    let playerNameInputForm;
     const _cacheDOM = function(){
+        board = document.querySelector(".game.grid");
+        playerNameInputForm = document.querySelector("form");
         const displayArea = document.querySelector(".display.area");
         playerTurnInfo = displayArea.querySelector(".turn.info .player");
         symbolTurnInfo = displayArea.querySelector(".turn.info .symbol");
@@ -206,6 +215,14 @@ const gameManager = function manager() {
 
     const _bindEvents = function(){
         restartButton.addEventListener("click", ()=> startGame());
+        playerNameInputForm.addEventListener("submit", (e)=> {
+            e.preventDefault();
+            _loadGame()
+        })
+    }
+
+    const _renderBoard = function(){
+        board.style.display = "grid";
     }
 
     const _assignPlayers = function () {
@@ -281,7 +298,7 @@ const gameManager = function manager() {
         } else{
             playerTurnInfo.textContent = winnerPlayer.getName() + " (" + winnerPlayer.getSymbol() + ") has won!";
         }
-        symbolTurnInfo.textContent = "";
+        symbolTurnInfo.textContent = " ";
     }
 
     const _renderPlayerNames = function(){
@@ -300,6 +317,10 @@ const gameManager = function manager() {
 
     const _hideStartNewGameButton = function(){
         restartButton.style.display = "none";
+    }
+
+    const _hidePlayerNameInputForm = function(){
+        playerNameInputForm.style.display = "none";
     }
 
     return { startGame, playRound, init};

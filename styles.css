@@ -5,7 +5,7 @@
 
 /* game area */
 .game.grid{
-    display:grid;
+    display:none;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     aspect-ratio: 1/1;
@@ -30,4 +30,9 @@
 
 .game.grid > div.empty:hover{
     background-color: var(--grid-background-hover-color);
+}
+
+/* display bottom area*/
+.display.area button{
+    display:none;
 }
