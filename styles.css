@@ -1,12 +1,12 @@
 *{
-    --grid-background-color: gray;
-    --grid-background-hover-color: blue;
-    --neutral-text-background-color: brown;
-    --player-one-background-color: red;
-    --player-two-background-color: blue;
-    --accent-color:gold;
-    --text-color:white;
-    --page-background-color:beige;
+    --grid-background-color: #8559A5;
+    --grid-background-hover-color: #54336b;
+    --neutral-text-background-color: #6DB193;
+    --player-one-background-color: #678dc7;
+    --player-two-background-color: #da7eec;
+    --text-color:#F4E5C2;
+    --page-background-color:#F4E5C2;
+    --gray-color: #323232;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -25,6 +25,10 @@ p, h1 {
     padding:0;
 }
 
+h1 {
+    color: var(--gray-color);
+}
+
 /* game area */
 .game.grid{
     display:none;
@@ -33,7 +37,7 @@ p, h1 {
     aspect-ratio: 1/1;
     height: 50vh;
     gap: 10px;
-    background-color: black;;
+    background-color: var(--gray-color);
 }
 
 .game.grid > div{
@@ -41,12 +45,12 @@ p, h1 {
 }
 
 .game.grid > div.x{
-    background: url("./images/x-mark.svg") black;
+    background: url("./images/x-mark.svg");
     background-color: var(--grid-background-color);
 }
 
 .game.grid > div.o{
-    background: url("./images/o-mark.svg") black;
+    background: url("./images/o-mark.svg");
     background-color: var(--grid-background-color);
 }
 
