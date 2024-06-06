@@ -171,7 +171,6 @@ const gameManager = function manager() {
         player1 = createPlayer(player1NameInput);
         player2 = createPlayer(player2NameInput);
         _cacheDOM();
-        _renderPlayerNames();
         _renderScores();
         _bindEvents();
         startGame();
@@ -180,6 +179,7 @@ const gameManager = function manager() {
     const startGame = function () {
         _hideStartNewGameButton();
         _assignPlayers();
+        _renderPlayerNames();
         currentTurnHolder = XSYMBOL;
         isRoundActive=true;
         gameboard.init();
