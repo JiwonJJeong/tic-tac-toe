@@ -178,8 +178,16 @@ const gameManager = function manager() {
     }
 
     const _initPlayersFromForm = function(){
-        player1 = createPlayer(playerNameInputForm.querySelector("#player1NameInput").value);
-        player2 = createPlayer(playerNameInputForm.querySelector("#player2NameInput").value);
+        let player1NameInput = playerNameInputForm.querySelector("#player1NameInput").value;
+        let player2NameInput = playerNameInputForm.querySelector("#player2NameInput").value;
+        if (player1NameInput == ""){
+            player1NameInput = "Player 1";
+        }
+        if (player2NameInput == ""){
+            player2NameInput = "Player 2";
+        }
+        player1 = createPlayer(player1NameInput);
+        player2 = createPlayer(player2NameInput);
     }
 
     const startGame = function () {
