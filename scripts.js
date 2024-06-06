@@ -8,6 +8,8 @@ const gameboard = function board() {
     const init = function () {
         _cacheDOM();
         _bindEvents();
+        _resetStoredArrays();
+        _clearBoard();
     }
 
     let squaresNodeList;
@@ -136,6 +138,21 @@ const gameboard = function board() {
         }
     }
 
+    const _resetStoredArrays = function(){
+        row1 = [];
+        row2 = [];
+        row3 = [];
+        console.log("Arrays have been reset to " + row1 + row2 + row3);
+    }
+
+    const _clearBoard = function(){
+        for (let square of squaresNodeList){
+            square.classList.remove("x");
+            square.classList.remove("o");
+            square.classList.add("empty");
+        }
+    }
+
     return { addSymbol, checkWin, init };
 }();
 
@@ -154,13 +171,14 @@ const gameManager = function manager() {
         player1 = createPlayer(player1NameInput);
         player2 = createPlayer(player2NameInput);
         _cacheDOM();
+        _hideStartNewGameButton();
+        _renderPlayerNames();
+        _renderScores();
         startGame();
     }
 
     const startGame = function () {
         _assignPlayers();
-        _renderPlayerNames();
-        _renderScores();
         currentTurnHolder = XSYMBOL;
         isRoundActive=true;
         gameboard.init();
@@ -172,7 +190,8 @@ const gameManager = function manager() {
     let player1Name;
     let player1Score;
     let player2Name;
-    let player2Score;;
+    let player2Score;
+    let restartButton;
     const _cacheDOM = function(){
         const displayArea = document.querySelector(".display.area");
         playerTurnInfo = displayArea.querySelector(".turn.info .player");
@@ -181,6 +200,7 @@ const gameManager = function manager() {
         player1Score = displayArea.querySelector(".player1.info .score");
         player2Name = displayArea.querySelector(".player2.info .name");
         player2Score = displayArea.querySelector(".player2.info .score");
+        restartButton = displayArea.querySelector(".restart.button");
     }
 
     const _assignPlayers = function () {
@@ -203,10 +223,13 @@ const gameManager = function manager() {
                 _updateTurnHolder();
                 _declareTurn();
             } else {
-                _updateScore(winState);
+                let winner = _determinePlayerWhoWon(winState);
+                _updateScore(winner);
                 _renderScores();
                 isRoundActive=false;
                 console.log("Winner: " + winState);
+                _renderWinner(winner);
+                _showStartNewGameButton();
             }
         }
     }
@@ -228,15 +251,32 @@ const gameManager = function manager() {
         symbolTurnInfo.textContent = "You are " + currentTurnHolder + ".";
     }
 
-    const _updateScore = function (symbolThatWon){
+    const _determinePlayerWhoWon = function (symbolThatWon){
         if (player1.getSymbol() == symbolThatWon){
-            player1.incrementScore();
+            return player1;
         } else if (player2.getSymbol() == symbolThatWon){
-            player2.incrementScore();
+            return player2;
         } else if (symbolThatWon == "It's a tie!"){
+            return "tie";
+        }
+    }
+
+    const _updateScore = function (winnerPlayer){
+        if (winnerPlayer === "tie"){
             player1.incrementScore();
             player2.incrementScore();
+        } else {
+            winnerPlayer.incrementScore();
         }
+    }
+
+    const _renderWinner = function(winnerPlayer){
+        if (winnerPlayer === "tie"){
+            playerTurnInfo.textContent = "It's a tie!";
+        } else{
+            playerTurnInfo.textContent = winnerPlayer.getName() + " (" + winnerPlayer.getSymbol() + ") has won!";
+        }
+        symbolTurnInfo.textContent = "";
     }
 
     const _renderPlayerNames = function(){
@@ -249,7 +289,15 @@ const gameManager = function manager() {
         player2Score.textContent  = "Score: " + player2.getScore();
     }
 
-    return { startGame, playRound, init };
+    const _showStartNewGameButton = function(){
+        restartButton.display = "block";
+    }
+
+    const _hideStartNewGameButton = function(){
+        restartButton.display = "none";
+    }
+
+    return { startGame, playRound, init};
 }();
 
 function createPlayer(name) {
