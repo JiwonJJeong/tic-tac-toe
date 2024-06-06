@@ -174,6 +174,7 @@ const gameManager = function manager() {
         _hideStartNewGameButton();
         _renderPlayerNames();
         _renderScores();
+        _bindEvents();
         startGame();
     }
 
@@ -201,6 +202,10 @@ const gameManager = function manager() {
         player2Name = displayArea.querySelector(".player2.info .name");
         player2Score = displayArea.querySelector(".player2.info .score");
         restartButton = displayArea.querySelector(".restart.button");
+    }
+
+    const _bindEvents = function(){
+        restartButton.addEventListener("click", ()=> startGame());
     }
 
     const _assignPlayers = function () {
