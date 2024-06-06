@@ -173,6 +173,7 @@ const gameManager = function manager() {
         _initPlayersFromForm();
         _hidePlayerNameInputForm();
         _renderBoard();
+        _renderScores();
         startGame();
     }
 
