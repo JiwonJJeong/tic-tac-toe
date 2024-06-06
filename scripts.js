@@ -307,7 +307,7 @@ const gameManager = function manager() {
         } else{
             playerTurnInfo.textContent = winnerPlayer.getName() + " (" + winnerPlayer.getSymbol() + ") has won!";
         }
-        symbolTurnInfo.textContent = " ";
+        symbolTurnInfo.textContent = "";
     }
 
     const _renderPlayerNames = function(){

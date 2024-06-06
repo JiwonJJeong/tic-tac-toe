@@ -1,6 +1,28 @@
 *{
     --grid-background-color: gray;
     --grid-background-hover-color: blue;
+    --neutral-text-background-color: brown;
+    --player-one-background-color: red;
+    --player-two-background-color: blue;
+    --accent-color:gold;
+    --text-color:white;
+    --page-background-color:beige;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    height:100vh;
+    justify-content:center;
+    gap: 20px;
+    background-color: var(--page-background-color);
+}
+
+p, h1 {
+    margin:0;
+    padding:0;
 }
 
 /* game area */
@@ -33,6 +55,45 @@
 }
 
 /* display bottom area*/
+.display.area {
+    display:grid;
+    grid-template-rows: 100px 100px 100px;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 30px;
+    align-items:center;
+}
+
+.display.area .info{
+    padding: 12px;
+    box-sizing:border-box;
+    color: var(--text-color);
+    box-shadow: 2px 2px 2px black;
+    border-radius: 12px;
+}
+
+.display.area .turn.info{
+    grid-column: 1/3;
+    text-align: center;
+    font-size: 24px;
+    background-color: var(--neutral-text-background-color);
+    height: 80px;
+}
+
+.display.area .player1.info{
+    background-color: var(--player-one-background-color);
+}
+
+.display.area .player2.info{
+    background-color: var(--player-two-background-color);
+}
+
 .display.area button{
     display:none;
+    color: var(--text-color);
+    font-size: 24px;
+    grid-column: 1/3;
+    padding:12px;
+    background-color: var(--neutral-text-background-color);
+    border-style:none;
+    box-shadow: 2px 2px 2px black;
 }
