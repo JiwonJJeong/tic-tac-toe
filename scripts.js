@@ -172,6 +172,7 @@ const gameManager = function manager() {
     const _loadGame = function(){
         _initPlayersFromForm();
         _hidePlayerNameInputForm();
+        _renderDisplayArea();
         _renderBoard();
         _renderScores();
         startGame();
@@ -203,7 +204,7 @@ const gameManager = function manager() {
     const _cacheDOM = function(){
         this.board = document.querySelector(".game.grid");
         this.playerNameInputForm = document.querySelector("form");
-        const displayArea = document.querySelector(".display.area");
+        this.displayArea = document.querySelector(".display.area");
         this.playerTurnInfo = displayArea.querySelector(".turn.info .player");
         this.symbolTurnInfo = displayArea.querySelector(".turn.info .symbol");
         this.player1Name = displayArea.querySelector(".player1.info .name");
@@ -304,6 +305,10 @@ const gameManager = function manager() {
     const _renderPlayerNames = function(){
         player1Name.textContent = "Player: " + player1.getName() + " (" + player1.getSymbol() + ")";
         player2Name.textContent = "Player: " + player2.getName() + " (" + player2.getSymbol() + ")";
+    }
+
+    const _renderDisplayArea = function(){
+        displayArea.style.display = "grid";
     }
 
     const _renderScores = function(){

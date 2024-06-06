@@ -56,7 +56,7 @@ p, h1 {
 
 /* display bottom area*/
 .display.area {
-    display:grid;
+    display:none;
     grid-template-rows: 100px 100px 100px;
     grid-template-columns: 1fr 1fr;
     gap: 0 30px;
