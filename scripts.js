@@ -200,26 +200,17 @@ const gameManager = function manager() {
         _declareTurn();
     }
 
-    let playerTurnInfo;
-    let symbolTurnInfo;
-    let player1Name;
-    let player1Score;
-    let player2Name;
-    let player2Score;
-    let restartButton;
-    let board;
-    let playerNameInputForm;
     const _cacheDOM = function(){
-        board = document.querySelector(".game.grid");
-        playerNameInputForm = document.querySelector("form");
+        this.board = document.querySelector(".game.grid");
+        this.playerNameInputForm = document.querySelector("form");
         const displayArea = document.querySelector(".display.area");
-        playerTurnInfo = displayArea.querySelector(".turn.info .player");
-        symbolTurnInfo = displayArea.querySelector(".turn.info .symbol");
-        player1Name = displayArea.querySelector(".player1.info .name");
-        player1Score = displayArea.querySelector(".player1.info .score");
-        player2Name = displayArea.querySelector(".player2.info .name");
-        player2Score = displayArea.querySelector(".player2.info .score");
-        restartButton = displayArea.querySelector(".restart.button");
+        this.playerTurnInfo = displayArea.querySelector(".turn.info .player");
+        this.symbolTurnInfo = displayArea.querySelector(".turn.info .symbol");
+        this.player1Name = displayArea.querySelector(".player1.info .name");
+        this.player1Score = displayArea.querySelector(".player1.info .score");
+        this.player2Name = displayArea.querySelector(".player2.info .name");
+        this.player2Score = displayArea.querySelector(".player2.info .score");
+        this.restartButton = displayArea.querySelector(".restart.button");
     }
 
     const _bindEvents = function(){
