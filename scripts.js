@@ -171,7 +171,6 @@ const gameManager = function manager() {
         player1 = createPlayer(player1NameInput);
         player2 = createPlayer(player2NameInput);
         _cacheDOM();
-        _hideStartNewGameButton();
         _renderPlayerNames();
         _renderScores();
         _bindEvents();
@@ -179,6 +178,7 @@ const gameManager = function manager() {
     }
 
     const startGame = function () {
+        _hideStartNewGameButton();
         _assignPlayers();
         currentTurnHolder = XSYMBOL;
         isRoundActive=true;
@@ -295,11 +295,11 @@ const gameManager = function manager() {
     }
 
     const _showStartNewGameButton = function(){
-        restartButton.display = "block";
+        restartButton.style.display = "block";
     }
 
     const _hideStartNewGameButton = function(){
-        restartButton.display = "none";
+        restartButton.style.display = "none";
     }
 
     return { startGame, playRound, init};
