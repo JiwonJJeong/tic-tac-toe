@@ -4,5 +4,5 @@ The Odin Project tic-tac-toe game project using HTML, JS, CSS. Aim to organize c
 [Try it here!](https://jiwonjjeong.github.io/tic-tac-toe/)
 
 ## Achieved Learning Goals
-- **Class design and abstraction**: Organized JS with revealing module pattern using factory functions and IIFEs
-- **Conditonal and operator practice**: Used logic to track and update game state.
+- **Module design**: Planned how to separate code into related modules.
+- **Implementation abstraction**: Organized JS with revealing module pattern using factory functions and IIFEs.
